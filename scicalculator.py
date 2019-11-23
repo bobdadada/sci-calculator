@@ -14,9 +14,10 @@ version: 0.1
 的方式导入环境变量
 
 键盘绑定：
-    CTRL + R    -       一键清除输入文本
+    CTRL + F    -       一键清除输入文本
     ENTER       -       显示输出结果
     ESC         -       关闭窗口
+    F1          -       查看帮助
 """
 
 def validate(text):
@@ -25,7 +26,7 @@ def validate(text):
             return False
     return True
 
-menu_def = [['Help', 'About']]
+menu_def = [['&Help', '&About']]
 # All the stuff inside your window.
 layout = [[sg.Menu(menu_def)],
           [sg.Text('公式:'), sg.InputText(key='-IN-')],
@@ -40,7 +41,7 @@ while True:
     event, values = window.read()
     if event in (None, 'Exit', 'Escape:27'):   # if user closes window or clicks cancel
         break
-    if event == 'About':
+    if event in ('About', 'F1:112'):
         sg.Popup(help_text, title='帮助文件')
     if event == 'Calculate':
         inp = values['-IN-']
@@ -53,8 +54,8 @@ while True:
         window['-OUTPUT-'].Update(res)
         window['HISTORY'].Update(inp + '  -->  ' + res + '\n', append=True, autoscroll=True)
     if event in ('Control_L:17', 'Control_R:17'):
-        event, values = window.read(timeout=300)
-        if event == 'r':
+        event, _ = window.read(timeout=300)
+        if event == 'f':
             window['-IN-'].Update('')
             window['-OUTPUT-'].Update('')
 
