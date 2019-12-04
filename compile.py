@@ -14,4 +14,6 @@ else:
         os.mkdir(dstdir)
     if os.path.isfile(dst):
         os.remove(dst)
+    print('save to %s.' % dst)
     shutil.copy('./dist/{}.exe'.format(name), dst)
+    print('done.')
