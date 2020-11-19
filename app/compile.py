@@ -7,7 +7,7 @@ os.environ['PATH'] = path
 
 dst = dstdir + name + '.exe'
 
-exestr = 'pyinstaller -F --clean ' + ' -w {}.py'.format(name)
+exestr = 'pyinstaller -F --clean ' + ' -w {}.py'.format(src_name) + ' -i {}'.format(icon)
 print(exestr)
 
 # 当发生RecursionError时添加的补丁
@@ -22,7 +22,7 @@ r = os.system(exestr)
 
 if r:
     print('error happened when using pyinstaller, try set larger maximum recursion depth.')
-    file = '{}.spec'.format(name)
+    file = '{}.spec'.format(src_name)
     tempfile = '_' + file
     with open(file, 'r') as fp, open(tempfile, 'w') as gp:
         lines = fp.readlines()
@@ -42,4 +42,4 @@ else:
     if os.path.isfile(dst):
         os.remove(dst)
     print('save to %s.' % dst)
-    shutil.copy('./dist/{}.exe'.format(name), dst)
+    shutil.copy('./dist/{}.exe'.format(src_name), dst)
